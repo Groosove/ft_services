@@ -1,10 +1,11 @@
-ft_services=("nginx" "wordpress")
+ft_services=("nginx" "wordpress" "phpmyadmin" "mysql")
 
 minikube start --vm-driver=virtualbox
 eval $(minikube docker-env)
 
 minikube addons enable metallb
 kubectl apply -f srcs/kubeconf/metallb.yaml
+kubectl apply -f srcs/kubeconf/volume.yaml
 
 for service in "${ft_services[@]}"
 do
