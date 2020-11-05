@@ -5,22 +5,25 @@
 #                                                     +:+ +:+         +:+      #
 #    By: flavon <flavon@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/04 19:58:43 by flavon            #+#    #+#              #
-#    Updated: 2020/11/05 17:23:44 by flavon           ###   ########.fr        #
+#    Created: 2020/11/05 16:53:12 by flavon            #+#    #+#              #
+#    Updated: 2020/11/05 17:01:01 by flavon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM alpine:latest
+FROM	alpine:3.7
 
-RUN apk add openrc mysql mysql-client
+EXPOSE  21
 
-VOLUME ["/var/lib"]
+RUN		apk update
+RUN		apk add vsftpd openrc openssl
+RUN		rc-update add vsftpd default
 
-COPY	./srcs/my.cnf	/etc/mysql/
-COPY	./srcs/setup.sh ./
+# Create SSL certificate
+RUN openssl req -days 365 -newkey rsa:2048  -x509 -sha256 -nodes -out /etc/ssl/certs/certificate.crt \
+		-keyout /etc/ssl/certs/key.key -subj '/C=RU/ST=XX/L=XX/O=XX/OU=XX/CN=born2code'
 
-RUN		chmod +x ./setup.sh
+RUN	echo root:root | chpasswd
 
-EXPOSE 3306
+COPY srcs/vsftpd.conf  /etc/vsftpd/vsftpd.conf
 
-ENTRYPOINT ./setup.sh
+CMD	vsftpd /etc/vsftpd/vsftpd.conf

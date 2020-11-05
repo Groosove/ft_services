@@ -1,4 +1,4 @@
-ft_services=("nginx" "wordpress" "phpmyadmin" "mysql")
+ft_services=("nginx" "wordpress" "phpmyadmin" "mysql" "ftps")
 
 minikube start --vm-driver=virtualbox
 eval $(minikube docker-env)
