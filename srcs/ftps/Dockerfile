@@ -6,24 +6,25 @@
 #    By: flavon <flavon@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/05 16:53:12 by flavon            #+#    #+#              #
-#    Updated: 2020/11/13 18:24:40 by flavon           ###   ########.fr        #
+#    Updated: 2020/11/13 22:51:34 by flavon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM	alpine:3.7
 
-EXPOSE  21
+RUN	apk update && apk add openssl vsftpd openrc
+	
+RUN  openssl req -days 365 -newkey rsa:2048 -x509 -sha256 -nodes -out /etc/vsftpd/vsftpd.pem \
+    	-keyout /etc/vsftpd/vsftpd.pem -subj '/C=RU/ST=XX/L=XX/O=XX/OU=XX/CN=flavon' 
 
-RUN		apk update
-RUN		apk add vsftpd openrc openssl
-RUN		rc-update add vsftpd default
+RUN echo 'root:root' | chpasswd 
+RUN mkdir -p /var/log/ftp && touch /var/log/ftp/xferlog
+RUN rc default
 
-# Create SSL certificate
-RUN openssl req -days 365 -newkey rsa:2048  -x509 -sha256 -nodes -out /etc/ssl/certs/certificate.crt \
-		-keyout /etc/ssl/certs/key.key -subj '/C=RU/ST=XX/L=XX/O=XX/OU=XX/CN=born2code'
+VOLUME	["sys/fs/cgroup"]
 
-RUN	echo root:root | chpasswd
+EXPOSE 21
 
-COPY ./srcs/vsftpd.conf  /etc/vsftpd/vsftpd.conf
+COPY	srcs/vsftpd.conf		/etc/vsftpd/vsftpd.conf
 
-CMD	vsftpd /etc/vsftpd/vsftpd.conf
+ENTRYPOINT	vsftpd /etc/vsftpd/vsftpd.conf
