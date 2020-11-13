@@ -6,7 +6,7 @@
 #    By: flavon <flavon@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/05 16:53:12 by flavon            #+#    #+#              #
-#    Updated: 2020/11/05 17:01:01 by flavon           ###   ########.fr        #
+#    Updated: 2020/11/13 18:24:40 by flavon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,6 @@ RUN openssl req -days 365 -newkey rsa:2048  -x509 -sha256 -nodes -out /etc/ssl/c
 
 RUN	echo root:root | chpasswd
 
-COPY srcs/vsftpd.conf  /etc/vsftpd/vsftpd.conf
+COPY ./srcs/vsftpd.conf  /etc/vsftpd/vsftpd.conf
 
 CMD	vsftpd /etc/vsftpd/vsftpd.conf
