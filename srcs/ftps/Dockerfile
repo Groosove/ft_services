@@ -6,11 +6,11 @@
 #    By: flavon <flavon@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/05 16:53:12 by flavon            #+#    #+#              #
-#    Updated: 2020/11/13 22:51:34 by flavon           ###   ########.fr        #
+#    Updated: 2020/11/14 14:32:31 by flavon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM	alpine:3.7
+FROM	alpine:latest
 
 RUN	apk update && apk add openssl vsftpd openrc
 	
