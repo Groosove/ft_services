@@ -2,42 +2,52 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ftps-svc
+  labels:
+    app  : ftps-svc
+    owner: flavon
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.99.105
+  loadBalancerIP: 192.168.99.104
   selector:
     app: ftps
   ports:
-  - port: 21
-    name: port-ftps
-    protocol: TCP
-    targetPort: 21
-  - port: 10100
-    name: port-passv
-    protocol: TCP
-    targetPort: 10100
-
+    - name: port-ftps-1
+      protocol: TCP
+      port: 20
+      targetPort: 20
+    - name: port-ftps-2
+      protocol: TCP
+      port: 21
+      targetPort: 21
+    - name: port-passv
+      protocol: TCP
+      port: 10100
+      targetPort: 10100
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ftps
+  name: ftps-deployment
+  labels:
+    app  : ftps
+    owner: fkathryn
 spec:
   selector:
     matchLabels:
-      app: ftps
+       app: ftps
   strategy:
     type: Recreate
   template:
     metadata:
-      labels:
+      labels: 
         app: ftps
+        owner: flavon
     spec:
-      containers:
+      containers: 
       - name: ftps
         image: ftps-image
         imagePullPolicy: Never
         ports:
+        - containerPort: 20
         - containerPort: 21
         - containerPort: 10100
