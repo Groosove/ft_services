@@ -10,12 +10,11 @@ spec:
   selector:
     app: grafana
   ports:
-  - protocol: TCP
+  - name: port-grafana
+    protocol: TCP
     port: 3000
     targetPort: 3000
-
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
