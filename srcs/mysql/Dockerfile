@@ -6,7 +6,7 @@
 #    By: flavon <flavon@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/04 19:58:43 by flavon            #+#    #+#              #
-#    Updated: 2020/11/16 11:29:18 by flavon           ###   ########.fr        #
+#    Updated: 2020/11/17 00:09:36 by flavon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ RUN apk add openrc mysql mysql-client
 
 COPY	./srcs/my.cnf	/etc/mysql/
 COPY	./srcs/setup.sh ./
+COPY	./srcs/wordpress.sql ./
 
 VOLUME ["/var/lib"]
 

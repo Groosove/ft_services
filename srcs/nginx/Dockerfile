@@ -6,11 +6,13 @@
 #    By: flavon <flavon@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/18 14:51:46 by flavon            #+#    #+#              #
-#    Updated: 2020/11/04 19:46:54 by flavon           ###   ########.fr        #
+#    Updated: 2020/11/17 00:50:15 by flavon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine:latest
+# Port	
+EXPOSE 80 443 22
 
 RUN	apk update
 RUN apk add openrc openssl nginx supervisor
@@ -34,8 +36,5 @@ RUN openssl req -days 365 -newkey rsa:2048  -x509 -sha256 -nodes -out /etc/ssl/c
 # Create user in SSH
 RUN adduser -D flavon && echo 'flavon:root' | chpasswd && addgroup flavon wheel && echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel \
 && /usr/bin/ssh-keygen -A
-
-# Port	
-EXPOSE 80 443 22
 
 CMD		["usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

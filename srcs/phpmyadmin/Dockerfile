@@ -6,7 +6,7 @@
 #    By: flavon <flavon@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/04 20:11:50 by flavon            #+#    #+#              #
-#    Updated: 2020/11/16 11:20:11 by flavon           ###   ########.fr        #
+#    Updated: 2020/11/16 14:42:52 by flavon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ RUN apk update && apk upgrade
 RUN apk add nginx supervisor openrc php7 php7-fpm php7-iconv php7-json php7-mbstring php7-mysqli php7-phar php7-session
 RUN	rc-update add php-fpm7 default
 
-COPY srcs/nginx.conf /etc/nginx/conf.d/default.conf
-COPY srcs/supervisor.conf /etc/supervisord.conf
+COPY srcs/phpmyadmin.conf /etc/nginx/conf.d/default.conf
+COPY srcs/supervisord.conf /etc/supervisord.conf
 COPY srcs/config.inc.php /var/www/phpmyadmin/config.inc.php
 
 RUN	mkdir /run/nginx /var/run/php
